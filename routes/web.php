@@ -8,4 +8,4 @@ $router->get('/', function () use ($router) {
 
 $router->get('/users', 'UsersController@getAllUsers');
 
-
+$router->post('/auth/login', 'AuthController@login');
