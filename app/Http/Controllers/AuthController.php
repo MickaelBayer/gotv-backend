@@ -8,6 +8,7 @@ use Illuminate\Validation\ValidationException;
 use ReallySimpleJWT\Token;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\JWTAuth;
+use App\Http\Controllers\UsersController;
 
 /**
  * Class AuthController
@@ -35,7 +36,7 @@ class AuthController extends Controller
     {
         $credentials = $request->only('usr_pseudo', 'password');
 
-        if (! $token = $this->jwt->attempt($credentials)) {
+        if (!$token = $this->jwt->attempt($credentials)) {
             return response()->json(['error' => 'Bad credentials'], 400);
         }
 
@@ -45,55 +46,72 @@ class AuthController extends Controller
         ]);
     }
 
-//    /**
-//     * @param Request $request
-//     * @return \Illuminate\Http\JsonResponse
-//     */
-//    public function register(Request $request)
-//    {
-//        try {
-//            $this->validate($request, [
-//                'pseudo' => 'required',
-//                'email' => 'required',
-//                'password' => 'required',
-//                'firstname' => 'required',
-//                'lastname' => 'required'
-//            ]);
-//        } catch (ValidationException $e) {
-//            return $this->errorHttp($e);
-//        }
-//
-//        $data = [
-//            'pseudo' => $request->input('pseudo'),
-//            'email' => $request->input('email'),
-//            'password' => password_hash($request->input('password'), PASSWORD_BCRYPT),
-//            'firstname' => $request->input('firstname'),
-//            'lastname' => $request->input('lastname')
-//        ];
-//
-//        $user = User::create($data);
-//
-//        $userId = $user->id;
-//        $secret = getenv('JWT_SECRET');
-//        $expiration = time() + 3600;
-//        $issuer = 'localhost';
-//
-//        $token = Token::create($userId, $secret, $expiration, $issuer);
-//        $message = "Successfully registered !";
-//
-//        return response()->json(compact('user','token', 'message'),201);
-//    }
-//
-//    /**
-//     * @return \Illuminate\Http\JsonResponse
-//     */
-//    public function logout()
-//    {
-//        try {
-//            $this->jwt->parseToken()->invalidate();
-//            return response()->json(['message' => 'Successfully logout']);
-//        } catch (JWTException $e) {
-//            return response()->json(['message' => $e]);
-//        }
-//    }
+    /**
+     * Fonction permettant à l'utilisateur de se déconnecter
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function logout()
+    {
+        try {
+            $this->jwt->parseToken()->invalidate();
+            return response()->json(['message' => 'Successfully logout']);
+        } catch (JWTException $e) {
+            return response()->json(['message' => $e]);
+        }
+    }
+
+    /**
+     * Fonction permettant la création d'un utilisateur
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function register(Request $request)
+    {
+        // vérification de la présence de l'email dans la base de donnée
+        $isEmail = User::where('usr_email', strtolower($request->input('usr_email')))->get();
+        echo(sizeof($isEmail) == 0);
+        if(sizeof($isEmail) != 0){
+            return response()->json(['noError' => '3001']);
+        }
+
+        // vérification de la présence du pseudo dans la base de donnée
+        $isPseudo = User::where('usr_pseudo', strtolower($request->input('usr_pseudo')))->get();
+        echo(sizeof($isPseudo) == 0);
+        if(sizeof($isPseudo) != 0){
+            return response()->json(['noError' => '3002']);
+        }
+        try {
+            $this->validate($request, [
+                'usr_pseudo' => 'required',
+                'usr_email' => 'required',
+                'password' => 'required',
+                'usr_firstname' => 'required',
+                'usr_lastname' => 'required'
+            ]);
+        } catch (ValidationException $e) {
+            return response()-> json(['noError' => '3000']);
+        }
+
+        $data = [
+            'usr_pseudo' => strtolower($request->input('usr_pseudo')),
+            'usr_email' => strtolower($request->input('usr_email')),
+            'password' => password_hash($request->input('password'), PASSWORD_BCRYPT),
+            'usr_firstname' => $request->input('usr_firstname'),
+            'usr_lastname' => $request->input('usr_lastname')
+        ];
+
+
+        $user = User::create($data);
+        $userId = $user->id;
+        $secret = getenv('JWT_SECRET');
+        $expiration = time() + 3600;
+        $issuer = 'localhost';
+
+        $token = Token::create($userId, $secret, $expiration, $issuer);
+        $message = "Successfully registered !";
+
+        return response()->json(compact('user', 'token', 'message'), 201);
+
+
+    }
 }
