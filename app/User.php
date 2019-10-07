@@ -23,7 +23,10 @@ class User extends Model implements JWTSubject, AuthenticatableContract, Authori
         'usr_pseudo',
         'password',
         'usr_firstname',
-        'usr_lastname'
+        'usr_lastname',
+        'usr_roe_id',
+        'usr_sun_id',
+        'usr_activ'
     ];
 
     protected $hidden =  [
@@ -38,6 +41,11 @@ class User extends Model implements JWTSubject, AuthenticatableContract, Authori
     public function getJWTCustomClaims()
     {
         return [];
+    }
+
+    public function getIsActiv()
+    {
+        return $this->usr_activ;
     }
 
 }
