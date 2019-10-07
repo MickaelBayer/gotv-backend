@@ -34,8 +34,8 @@ class AuthController extends Controller
      */
     public function login(Request $request)
     {
-        $credentials = $request->only('usr_pseudo', 'password');
 
+        $credentials = $request->only('usr_pseudo', 'password');
         if (!$token = $this->jwt->attempt($credentials)) {
             return response()->json(['error' => 'Bad credentials'], 400);
         }
@@ -71,14 +71,14 @@ class AuthController extends Controller
         $isEmail = User::where('usr_email', strtolower($request->input('usr_email')))->get();
         echo(sizeof($isEmail) == 0);
         if(sizeof($isEmail) != 0){
-            return response()->json(['noError' => '3001']);
+            return response()->json(['error' => '3001', 'message' => 'Email déjà présent dans la base de donnée'], 500);
         }
 
         // vérification de la présence du pseudo dans la base de donnée
         $isPseudo = User::where('usr_pseudo', strtolower($request->input('usr_pseudo')))->get();
         echo(sizeof($isPseudo) == 0);
         if(sizeof($isPseudo) != 0){
-            return response()->json(['noError' => '3002']);
+            return response()->json(['error' => '3002', 'message' => 'Pseudo déjà présent dans la base de donnée'], 500);
         }
         try {
             $this->validate($request, [
@@ -89,7 +89,7 @@ class AuthController extends Controller
                 'usr_lastname' => 'required'
             ]);
         } catch (ValidationException $e) {
-            return response()-> json(['noError' => '3000']);
+            return response()-> json(['error' => '3000', 'message' => 'Erreur au niveau du serveur'], 500);
         }
 
         $data = [
@@ -99,7 +99,6 @@ class AuthController extends Controller
             'usr_firstname' => $request->input('usr_firstname'),
             'usr_lastname' => $request->input('usr_lastname')
         ];
-
 
         $user = User::create($data);
         $userId = $user->id;
@@ -111,7 +110,5 @@ class AuthController extends Controller
         $message = "Successfully registered !";
 
         return response()->json(compact('user', 'token', 'message'), 201);
-
-
     }
 }
