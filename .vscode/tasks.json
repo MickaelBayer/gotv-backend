@@ -1,0 +1,38 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "windows": {
+        "options": {
+            "cwd": "${workspaceFolder}",
+            "shell": {
+                "executable": "powershell.exe"
+            }
+        }
+    },
+    "tasks": [{
+            "label": "php:serve",
+            "type": "shell",
+            "command": "php",
+            "args": [
+                "-S",
+                "localhost:${input:port}",
+                "-t",
+                "./public"
+            ]
+        },
+        {
+            "label": "composer:install",
+            "type": "shell",
+            "command": "composer",
+            "args": [
+                "install"
+            ]
+        }
+    ],
+    "inputs": [{
+        "type": "promptString",
+        "id": "port",
+        "description": "Numéro de port ? (ex : 8080)"
+    }]
+}
