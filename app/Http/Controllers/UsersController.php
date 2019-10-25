@@ -2,13 +2,24 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 
 use App\User;
 
-class UsersController
+class UsersController extends Controller
 {
-    public function getAllUsers(){
+
+    /**
+     * Create a new AuthController instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth:api');
+    }
+
+    public function getAllUsers()
+    {
         $user = User::all();
         return response()->json($user);
     }
