@@ -9,8 +9,9 @@
         "doctrine/dbal": "^2.9",
         "laravel/lumen-framework": "5.8.*",
         "rbdwllr/reallysimplejwt": "^2.0",
-        "tymon/jwt-auth": "1.0.0-rc.5",
-        "ext-json": "*"
+        "tymon/jwt-auth": "1.0.0-rc.4.1",
+        "ext-json": "*",
+        "php-tmdb/api": "~2.1"
     },
     "require-dev": {
         "fzaninotto/faker": "^1.4",
