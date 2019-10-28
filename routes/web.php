@@ -1,6 +1,5 @@
 <?php
 
-
 $router->get('/', function () use ($router) {
     return $router->app->version();
 });
@@ -13,5 +12,8 @@ $router->group(['prefix' => 'api'], function () use ($router) {
     });
     $router->group(['prefix' => 'users'], function () use ($router) {
         $router->get('/', 'UsersController@getAllUsers');
+    });
+        $router->group(['prefix' => 'tmdb'], function () use ($router) {
+        $router->get('/', 'TmdbController@testTmdb');
     });
 });
