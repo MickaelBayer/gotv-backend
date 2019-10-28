@@ -6,8 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Role extends Model
 {
+    protected $primaryKey = "roe_id";
+
     protected $fillable = [
-        'roe_id',
         'roe_name',
         'roe_description'
     ];

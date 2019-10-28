@@ -12,11 +12,11 @@ class Vote extends Model
 
     public function series()
     {
-        return $this->hasMany('App\Models\Series');
+        return $this->belongsTo('App\Models\Series', 'voe_see_id');
     }
 
     public function users()
     {
-        return $this->hasMany('App\Models\User');
+        return $this->belongsTo('App\Models\User', 'voe_usr_id');
     }
 }

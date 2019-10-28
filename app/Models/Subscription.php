@@ -6,8 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Subscription extends Model
 {
+    protected $primaryKey = "sun_id";
+
     protected $fillable = [
-        'sun_id',
         'sun_name',
         'sun_price'
     ];
