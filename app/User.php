@@ -25,13 +25,22 @@ class User extends Model implements JWTSubject, AuthenticatableContract, Authori
         'usr_firstname',
         'usr_lastname',
         'usr_roe_id',
-        'usr_sun_id',
         'usr_activ'
     ];
 
     protected $hidden =  [
         'password'
     ];
+
+    public function subscription()
+    {
+        return $this->belongsTo('App\Models\Subscription', 'usr_sun_id');
+    }
+
+    public function role()
+    {
+        return $this->belongsTo('App\Models\Role', 'usr_roe_id');
+    }
 
     public function getJWTIdentifier()
     {
@@ -47,5 +56,4 @@ class User extends Model implements JWTSubject, AuthenticatableContract, Authori
     {
         return $this->usr_activ;
     }
-
 }
