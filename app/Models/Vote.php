@@ -6,15 +6,24 @@ use Illuminate\Database\Eloquent\Model;
 
 class Vote extends Model
 {
-    protected $guarded = [];
+    protected $primaryKey = "voe_id";
 
-    public function series()
+    protected $fillable = [
+        'voe_id',
+    ];
+
+    protected $hidden =  [
+        'voe_see_id',
+        'voe_usr_id'
+    ];
+
+    public function serie()
     {
-        return $this->belongsTo('App\Models\Series', 'voe_see_id');
+        return $this->belongsTo('App\Models\Serie', 'voe_see_id');
     }
 
-    public function users()
+    public function user()
     {
-        return $this->belongsTo('App\Models\User', 'voe_usr_id');
+        return $this->belongsTo('App\User', 'voe_usr_id');
     }
 }

@@ -14,7 +14,7 @@ class VotesController extends Controller
 
     public function getAllVotes()
     {
-        $vote = Vote::with('voe_see_id', 'voe_usr_id')->get();
+        $vote = Vote::with('serie', 'user')->get();
         return $vote;
     }
 

@@ -29,17 +29,24 @@ class User extends Model implements JWTSubject, AuthenticatableContract, Authori
     ];
 
     protected $hidden =  [
-        'password'
+        'password',
+        'usr_sun_id',
+        'usr_roe_id'
     ];
 
-    public function usr_sun_id()
+    public function subscription()
     {
         return $this->belongsTo('App\Models\Subscription', 'usr_sun_id');
     }
 
-    public function usr_roe_id()
+    public function role()
     {
         return $this->belongsTo('App\Models\Role', 'usr_roe_id');
+    }
+
+    public function votes()
+    {
+        return $this->hasMany('App\Models\Vote', 'voe_usr_id');
     }
 
     public function getJWTIdentifier()
