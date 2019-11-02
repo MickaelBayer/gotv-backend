@@ -8,7 +8,7 @@ class Serie extends Model
 {
     protected $fillable = [
         'see_id',
-        'see_original_name',
+        'see_name',
         'see_tmdb_id',
         'see_original_country',
         'see_first_air_date',
