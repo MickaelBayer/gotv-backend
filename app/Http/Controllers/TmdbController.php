@@ -15,11 +15,11 @@ class TmdbController extends Controller
         $urlImage = 'https://image.tmdb.org/t/p/w500/';
         $lang = 'fr-FR';
         $apiKey = 'cf4fe60a904bbb135ef155c21e68d143';
-        $contents = file_get_contents('https://api.themoviedb.org/3/tv/popular?api_key=' . $apiKey .'&language='.$lang.'&page=1');
+        $contents = file_get_contents('https://api.themoviedb.org/3/tv/top_rated?api_key=' . $apiKey .'&language='.$lang.'&page=1');
         $contents = json_decode($contents, true);
         $totalPage = $contents['total_pages'];
         for ($currentPage = 1; $currentPage <= $totalPage; $currentPage++) {
-            $contents = file_get_contents('https://api.themoviedb.org/3/tv/popular?api_key=' . $apiKey .'&language='.$lang.'&page='.$currentPage);
+            $contents = file_get_contents('https://api.themoviedb.org/3/tv/top_rated?api_key=' . $apiKey .'&language='.$lang.'&page='.$currentPage);
             $contents = json_decode($contents, true);
             foreach($contents['results'] as $result){
                 $country = null;
@@ -27,7 +27,7 @@ class TmdbController extends Controller
                 $first_air_date = null;
                 if(isset($result['first_air_date'])) $first_air_date = $result['first_air_date'];
                 $data = [
-                    'see_original_name' => $result['original_name'],
+                    'see_name' => $result['name'],
                     'see_original_country' => $country,
                     'see_first_air_date' => $first_air_date,
                     'see_original_lang' => $result['original_language'],

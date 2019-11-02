@@ -28,7 +28,7 @@ class SeriesController extends Controller
     {
         try {
             $this->validate($request, [
-                'see_original_name' => 'required',
+                'see_name' => 'required',
                 'see_tmdb_id' => 'required',
                 'see_original_country' => 'required',
                 'see_first_air_date' => 'required',
@@ -43,7 +43,7 @@ class SeriesController extends Controller
         }
 
         $serie = new Serie();
-        $serie->see_original_name = $request->see_original_name;
+        $serie->see_name = $request->see_name;
         $serie->see_tmdb_id = $request->see_tmdb_id;
         $serie->see_original_country = $request->see_original_country;
         $serie->see_first_air_date = $request->see_first_air_date;
@@ -62,7 +62,7 @@ class SeriesController extends Controller
         // validation des champs
         try {
             $this->validate($request, [
-                'see_original_name' => 'required',
+                'see_name' => 'required',
                 'see_tmdb_id' => 'required',
                 'see_original_country' => 'required',
                 'see_first_air_date' => 'required',
@@ -76,7 +76,7 @@ class SeriesController extends Controller
         }
 
         $serie = Serie::find($id);
-        $serie->see_original_name = $request->see_original_name;
+        $serie->see_name = $request->see_name;
         $serie->see_tmdb_id = $request->see_tmdb_id;
         $serie->see_original_country = $request->see_original_country;
         $serie->see_first_air_date = $request->see_first_air_date;

@@ -97,7 +97,7 @@ CREATE TABLE `roles` (
 
 CREATE TABLE `series` (
   `see_id` int(11) NOT NULL,
-  `see_original_name` text,
+  `see_name` text,
   `see_tmdb_id` int(11) DEFAULT NULL,
   `see_original_country` text,
   `see_first_air_date` text,
