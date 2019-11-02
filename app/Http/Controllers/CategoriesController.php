@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\CatSerie;
+use App\Models\Categories;
 use Illuminate\Http\Request;
 
-class CatSeriesController extends Controller
+class CategoriesController extends Controller
 {
     public function __construct()
     {
@@ -14,13 +14,13 @@ class CatSeriesController extends Controller
 
     public function getAllCatSeries()
     {
-        $catSerie = CatSerie::get();
+        $catSerie = Categories::get();
         return $catSerie;
     }
 
     public function getCatSerieById(int $id)
     {
-        $catSerie = CatSerie::find($id);
+        $catSerie = Categories::find($id);
         return $catSerie;
     }
 
@@ -36,7 +36,7 @@ class CatSeriesController extends Controller
         //     return response()->json(['error' => '3000', 'message' => $e], 500);
         // }
 
-        $catSerie = new CatSerie();
+        $catSerie = new Categories();
         $catSerie->save();
         return $catSerie;
     }
@@ -53,14 +53,14 @@ class CatSeriesController extends Controller
     //     //     return response()->json(['error' => '3000', 'message' => $e], 401);
     //     // }
 
-    //     $catSerie = CatSerie::find($id);
+    //     $catSerie = Categories::find($id);
     //     $catSerie->save();
     //     return $catSerie;
     // }
 
     public function deleteCatSerieById(int $id)
     {
-        $catSerie = CatSerie::find($id);
+        $catSerie = Categories::find($id);
         $catSerie->delete();
         return response()->json(['message' => 'Deleted !']);
     }
