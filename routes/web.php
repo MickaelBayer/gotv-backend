@@ -35,12 +35,12 @@ $router->group(['prefix' => 'api'], function () use ($router) {
         $router->delete('/{id}', 'SeriesController@deleteSerieById');
     });
 
-    $router->group(['prefix' => 'categories-series'], function () use ($router) {
-        $router->get('/', 'CatSeriesController@getAllCatSeries');
-        $router->get('/{id}', 'CatSeriesController@getCatSerieById');
-        $router->post('/', 'CatSeriesController@postCatSerie');
-        $router->put('/{id}', 'CatSeriesController@putCatSerieById');
-        $router->delete('/{id}', 'CatSeriesController@deleteCatSerieById');
+    $router->group(['prefix' => 'categories'], function () use ($router) {
+        $router->get('/', 'CategoriesController@getAllCatSeries');
+        $router->get('/{id}', 'CategoriesController@getCatSerieById');
+        $router->post('/', 'CategoriesController@postCatSerie');
+        $router->put('/{id}', 'CategoriesController@putCatSerieById');
+        $router->delete('/{id}', 'CategoriesController@deleteCatSerieById');
     });
 
     $router->group(['prefix' => 'subscriptions'], function () use ($router) {
@@ -74,7 +74,10 @@ $router->group(['prefix' => 'api'], function () use ($router) {
         $router->put('/{id}', 'PlatformSeriesController@putPlatformSerieById');
         $router->delete('/{id}', 'PlatformSeriesController@deletePlatformSerieById');
     });
-        $router->group(['prefix' => 'tmdb'], function () use ($router) {
-        $router->get('/', 'TmdbController@testTmdb');
+    $router->group(['prefix' => 'tmdb'], function () use ($router) {
+        $router->get('/', 'TmdbController@fillSeriesWithTMDB');
+    });
+    $router->group(['prefix' => 'categories'], function () use ($router) {
+        $router->post('/', 'CategoriesSeriesController@PostCategoriesSerie');
     });
 });

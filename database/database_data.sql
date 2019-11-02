@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:8889
--- Generation Time: Oct 07, 2019 at 10:19 AM
+-- Generation Time: Nov 02, 2019 at 04:49 PM
 -- Server version: 5.7.23
 -- PHP Version: 7.2.10
 
@@ -13,6 +13,37 @@ SET time_zone = "+00:00";
 --
 -- Database: `goTvSeries`
 --
+CREATE DATABASE IF NOT EXISTS `goTvSeries` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+USE `goTvSeries`;
+
+--
+-- Dumping data for table `categories`
+--
+
+INSERT INTO `categories` (`cae_id`, `cae_id_tmdb`, `cae_label`) VALUES
+(1, 10759, 'Action et Aventure'),
+(2, 16, 'Animation'),
+(3, 35, 'Comédie'),
+(4, 80, 'Crime'),
+(5, 99, 'Documentaire'),
+(6, 18, 'Drame'),
+(7, 10751, 'Famille'),
+(8, 10762, 'Enfant'),
+(9, 9648, 'Mystère'),
+(10, 10763, 'Actualités'),
+(11, 10764, 'Histoire vraie'),
+(12, 10765, 'Sci-Fi & Fantaisie'),
+(13, 10766, 'Opéra'),
+(14, 10767, 'Discours'),
+(15, 10768, 'Guerre & Politique'),
+(16, 37, 'Western');
+
+--
+-- Dumping data for table `platforms`
+--
+
+INSERT INTO `platforms` (`plm_id`) VALUES
+(1);
 
 --
 -- Dumping data for table `roles`

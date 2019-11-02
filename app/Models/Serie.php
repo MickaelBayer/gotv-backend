@@ -7,16 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 class Serie extends Model
 {
     protected $fillable = [
-        'see_id'
+        'see_id',
+        'see_original_name',
+        'see_tmdb_id',
+        'see_original_country',
+        'see_first_air_date',
+        'see_original_lang',
+        'see_overview',
+        'see_poster_path',
+        'see_backdrop_path'
     ];
-
-    public function category()
-    {
-        return $this->belongsTo('App\Models\CatSerie', 'see_cae_id');
-    }
-
-    public function platform()
-    {
-        return $this->belongsTo('App\Models\PlatformSerie', 'see_plm_id');
-    }
 }
