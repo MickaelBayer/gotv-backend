@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\CategoriesSeries;
 use App\Models\Serie;
+use App\Models\Vote;
 use Tymon\JWTAuth\JWTAuth;
 
 class TmdbController extends Controller
@@ -44,6 +45,13 @@ class TmdbController extends Controller
                         'cae_see_category' => $cat,
                     ];
                     $categoriesSeries = CategoriesSeries::create($dataCatSeries);
+                }
+                for($mark = 1; $mark <= $result['vote_count']; $mark++){
+                    $dataVote = [
+                        'voe_mark' => $result['vote_average'],
+                        'voe_see_id' => $serieId
+                    ];
+                    $voteSeries = Vote::create($dataVote);
                 }
             }
         }

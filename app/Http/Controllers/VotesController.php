@@ -29,7 +29,9 @@ class VotesController extends Controller
         try {
             $this->validate($request, [
                 'voe_see_id' => 'required|integer',
-                'voe_usr_id' => 'required|integer',
+                'voe_usr_id' => 'integer',
+                'voe_mark' => 'required'
+
             ]);
         } catch (ValidationException $e) {
             return response()->json(['error' => '3000', 'message' => $e], 500);
@@ -38,6 +40,8 @@ class VotesController extends Controller
         $vote = new Vote();
         $vote->voe_see_id = $request->voe_see_id;
         $vote->voe_usr_id = $request->voe_usr_id;
+        $vote->voe_comment = $request->voe_comment;
+        $vote->voe_mark = $request->voe_mark;
         $vote->save();
         return $vote;
     }
@@ -48,7 +52,8 @@ class VotesController extends Controller
         try {
             $this->validate($request, [
                 'voe_see_id' => 'required|integer',
-                'voe_usr_id' => 'required|integer',
+                'voe_usr_id' => 'integer',
+                'voe_mark' => 'required'
             ]);
         } catch (ValidationException $e) {
             return response()->json(['error' => '3000', 'message' => $e], 401);
@@ -57,6 +62,8 @@ class VotesController extends Controller
         $vote = Vote::find($id);
         $vote->voe_see_id = $request->voe_see_id;
         $vote->voe_usr_id = $request->voe_usr_id;
+        $vote->voe_comment = $request->voe_comment;
+        $vote->voe_mark = $request->voe_mark;
         $vote->save();
         return $vote;
     }
