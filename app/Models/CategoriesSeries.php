@@ -6,9 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class CategoriesSeries extends Model
 {
-    protected $fillable = [
-        'cae_see_id'
-    ];
+    protected $guarded = [];
 
     public function serie()
     {
