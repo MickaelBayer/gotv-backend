@@ -14,7 +14,7 @@ class SeriesController extends Controller
 
     public function getAllSeries()
     {
-        $serie = Serie::with('platform', 'category', 'votes')->get();
+        $serie = Serie::with("see_categories")->get();
         return $serie;
     }
 
