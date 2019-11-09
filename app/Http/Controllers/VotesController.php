@@ -9,12 +9,12 @@ class VotesController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:api');
+        //$this->middleware('auth:api');
     }
 
     public function getAllVotes()
     {
-        $vote = Vote::with('voe_see_id', 'voe_usr_id')->get();
+        $vote = Vote::with('serie', 'user')->get();
         return $vote;
     }
 

@@ -9,12 +9,12 @@ class CategoriesController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:api');
+        //$this->middleware('auth:api');
     }
 
     public function getAllCatSeries()
     {
-        $catSerie = Categories::get();
+        $catSerie = Categories::with("series")->get();
         return $catSerie;
     }
 

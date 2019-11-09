@@ -14,13 +14,13 @@ class SeriesController extends Controller
 
     public function getAllSeries()
     {
-        $serie = Serie::get();
+        $serie = Serie::with("see_categories")->get();
         return $serie;
     }
 
     public function getSerieById(int $id)
     {
-        $serie = Serie::find($id);
+        $serie = Serie::with('platform', 'category', 'votes')->find($id);
         return $serie;
     }
 

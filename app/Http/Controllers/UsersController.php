@@ -10,18 +10,18 @@ class UsersController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:api');
+        // $this->middleware('auth:api');
     }
 
     public function getAllUsers()
     {
-        $user = User::with('usr_roe_id', 'usr_sun_id')->get();
+        $user = User::with('role', 'subscription', 'votes')->get();
         return $user;
     }
 
     public function getUserById(int $id)
     {
-        $user = User::with('usr_roe_id', 'usr_sun_id')->find($id);
+        $user = User::with('role', 'subscription', 'votes')->find($id);
         return $user;
     }
 
