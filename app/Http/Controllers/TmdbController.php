@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\CategoriesSeries;
 use App\Models\Serie;
+use App\Models\SerieCast;
 use App\Models\SerieVideo;
 use App\Models\Vote;
 
@@ -70,5 +71,16 @@ class TmdbController extends Controller
             array_push($serieVideos, new SerieVideo($result['id'], $result['key'], $result['name'], $result['type']));
         }
         return response()->json($serieVideos);
+    }
+
+    public function getCastsBySerieId(int $serieId)
+    {
+        $urlWithEndpoint = getenv('TMDB_ADDRESS') . '/tv/' . $serieId . '/credits';
+        $contents = $this->getResJsonFormat($urlWithEndpoint . '?api_key=' . getenv('TMDB_TOKEN'));
+        $serieCasts = array();
+        foreach ($contents['cast'] as $result) {
+            array_push($serieCasts, new SerieCast($result['id'], $result['character'], $result['name'], $result['profile_path'], $result['order']));
+        }
+        return response()->json($serieCasts);
     }
 }
