@@ -76,6 +76,7 @@ $router->group(['prefix' => 'api'], function () use ($router) {
     });
     $router->group(['prefix' => 'tmdb'], function () use ($router) {
         $router->get('/', 'TmdbController@fillSeries');
+        $router->get('/videos/{id}', 'TmdbController@getVideosBySerieId');
     });
     $router->group(['prefix' => 'categories'], function () use ($router) {
         $router->post('/', 'CategoriesSeriesController@PostCategoriesSerie');

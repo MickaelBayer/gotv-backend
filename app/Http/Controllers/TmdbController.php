@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\CategoriesSeries;
 use App\Models\Serie;
+use App\Models\SerieVideo;
 use App\Models\Vote;
-use Tymon\JWTAuth\JWTAuth;
 
 class TmdbController extends Controller
 {
@@ -61,8 +61,14 @@ class TmdbController extends Controller
         }
     }
 
-    private function getTMDBSeries($index){
-
-
+    public function getVideosBySerieId(int $serieId)
+    {
+        $urlWithEndpoint = getenv('TMDB_ADDRESS') . '/tv/' . $serieId . '/videos';
+        $contents = $this->getResJsonFormat($urlWithEndpoint . '?api_key=' . getenv('TMDB_TOKEN'));
+        $serieVideos = array();
+        foreach ($contents['results'] as $result) {
+            array_push($serieVideos, new SerieVideo($result['id'], $result['key'], $result['name'], $result['type']));
+        }
+        return response()->json($serieVideos);
     }
 }
