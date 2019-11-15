@@ -9,24 +9,26 @@ use Tymon\JWTAuth\JWTAuth;
 
 class TmdbController extends Controller
 {
+    private $lang = 'fr-FR';
 
-
-    public function fillSeriesWithTMDB()
+    public function fillSeries()
     {
         $urlImage = 'https://image.tmdb.org/t/p/w500/';
-        $lang = 'fr-FR';
-        $apiKey = 'cf4fe60a904bbb135ef155c21e68d143';
-        $contents = file_get_contents('https://api.themoviedb.org/3/tv/top_rated?api_key=' . $apiKey .'&language='.$lang.'&page=1');
-        $contents = json_decode($contents, true);
+        $urlWithEndpoint = getenv('TMDB_ADDRESS') . '/tv/top_rated';
+        $contents = $this->getResJsonFormat($urlWithEndpoint . '?api_key=' . getenv('TMDB_TOKEN') . '&language=' . $this->lang . '&page=1');
         $totalPage = $contents['total_pages'];
+
         for ($currentPage = 1; $currentPage <= $totalPage; $currentPage++) {
-            $contents = file_get_contents('https://api.themoviedb.org/3/tv/top_rated?api_key=' . $apiKey .'&language='.$lang.'&page='.$currentPage);
-            $contents = json_decode($contents, true);
-            foreach($contents['results'] as $result){
+            $contents = $this->getResJsonFormat($urlWithEndpoint . '?api_key=' . getenv('TMDB_TOKEN') . '&language=' . $this->lang . '&page=' . $currentPage);
+
+            foreach ($contents['results'] as $result) {
                 $country = null;
-                if(isset($result['origin_country'][0])) $country = $result['origin_country'][0];
                 $first_air_date = null;
-                if(isset($result['first_air_date'])) $first_air_date = $result['first_air_date'];
+
+                if (isset($result['origin_country'][0])) $country = $result['origin_country'][0];
+
+                if (isset($result['first_air_date'])) $first_air_date = $result['first_air_date'];
+
                 $data = [
                     'see_name' => $result['name'],
                     'see_original_country' => $country,
@@ -39,19 +41,21 @@ class TmdbController extends Controller
                 ];
                 $serie = Serie::create($data);
                 $serieId = $serie->id;
-                foreach($result['genre_ids'] as $cat){
+
+                foreach ($result['genre_ids'] as $cat) {
                     $dataCatSeries = [
                         'cae_see_serie' => $serieId,
                         'cae_see_category' => $cat,
                     ];
-                    $categoriesSeries = CategoriesSeries::create($dataCatSeries);
+                    CategoriesSeries::create($dataCatSeries);
                 }
-                for($mark = 1; $mark <= $result['vote_count']; $mark++){
+
+                for ($mark = 1; $mark <= $result['vote_count']; $mark++) {
                     $dataVote = [
                         'voe_mark' => $result['vote_average'],
                         'voe_see_id' => $serieId
                     ];
-                    $voteSeries = Vote::create($dataVote);
+                    Vote::create($dataVote);
                 }
             }
         }

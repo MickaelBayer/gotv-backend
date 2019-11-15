@@ -28,4 +28,17 @@ class Controller extends BaseController
             'expires_in' => auth()->factory()->getTTL() * 60
         ]);
     }
+
+    /**
+     * Get response from http request on Json format.
+     *
+     * @param  string $url
+     *
+     * @return mixed
+     */
+    protected function getResJsonFormat(string $url)
+    {
+        $res = file_get_contents($url);
+        return json_decode($res, true);
+    }
 }
