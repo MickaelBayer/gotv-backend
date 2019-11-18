@@ -14,7 +14,8 @@ class TmdbController extends Controller
 
     public function fillSeries()
     {
-        $urlImage = 'https://image.tmdb.org/t/p/w500/';
+        $urlPosterImage = 'https://image.tmdb.org/t/p/w500/';
+        $urlBackdropImage = 'https://image.tmdb.org/t/p/original/';
         $urlWithEndpoint = getenv('TMDB_ADDRESS') . '/tv/top_rated';
         $contents = $this->getResJsonFormat($urlWithEndpoint . '?api_key=' . getenv('TMDB_TOKEN') . '&language=' . $this->lang . '&page=1');
         $totalPage = $contents['total_pages'];
@@ -37,8 +38,8 @@ class TmdbController extends Controller
                     'see_original_lang' => $result['original_language'],
                     'see_tmdb_id' => $result['id'],
                     'see_overview' => $result['overview'],
-                    'see_poster_path' => $urlImage . $result['poster_path'],
-                    'see_backdrop_path' => $urlImage . $result['backdrop_path'],
+                    'see_poster_path' => $urlPosterImage . $result['poster_path'],
+                    'see_backdrop_path' => $urlBackdropImage . $result['backdrop_path'],
                 ];
                 $serie = Serie::create($data);
                 $serieId = $serie->id;
