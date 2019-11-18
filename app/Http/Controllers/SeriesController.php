@@ -20,7 +20,7 @@ class SeriesController extends Controller
 
     public function getSerieById(int $id)
     {
-        $serie = Serie::with('platform', 'category', 'votes')->find($id);
+        $serie = Serie::with("see_categories")->find($id);
         return $serie;
     }
 
