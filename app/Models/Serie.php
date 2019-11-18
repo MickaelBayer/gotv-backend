@@ -21,6 +21,6 @@ class Serie extends Model
 
     public function see_categories()
     {
-        return $this->belongsToMany('App\Models\Categories', "categories_series", "cae_see_id", "cae_see_category");
+        return $this->belongsToMany('App\Models\Categorie', "categories_series", "cae_see_serie", "cae_see_category");
     }
 }

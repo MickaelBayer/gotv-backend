@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Categories;
+use App\Models\Categorie;
 use Illuminate\Http\Request;
 
 class CategoriesController extends Controller
@@ -14,13 +14,13 @@ class CategoriesController extends Controller
 
     public function getAllCatSeries()
     {
-        $catSerie = Categories::with("series")->get();
+        $catSerie = Categorie::with("cae_series.see_categories")->get();
         return $catSerie;
     }
 
     public function getCatSerieById(int $id)
     {
-        $catSerie = Categories::find($id);
+        $catSerie = Categorie::find($id);
         return $catSerie;
     }
 
@@ -36,7 +36,7 @@ class CategoriesController extends Controller
         //     return response()->json(['error' => '3000', 'message' => $e], 500);
         // }
 
-        $catSerie = new Categories();
+        $catSerie = new Categorie();
         $catSerie->save();
         return $catSerie;
     }
@@ -60,7 +60,7 @@ class CategoriesController extends Controller
 
     public function deleteCatSerieById(int $id)
     {
-        $catSerie = Categories::find($id);
+        $catSerie = Categorie::find($id);
         $catSerie->delete();
         return response()->json(['message' => 'Deleted !']);
     }

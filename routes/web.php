@@ -75,7 +75,9 @@ $router->group(['prefix' => 'api'], function () use ($router) {
         $router->delete('/{id}', 'PlatformSeriesController@deletePlatformSerieById');
     });
     $router->group(['prefix' => 'tmdb'], function () use ($router) {
-        $router->get('/', 'TmdbController@fillSeriesWithTMDB');
+        $router->get('/', 'TmdbController@fillSeries');
+        $router->get('{id}/videos', 'TmdbController@getVideosBySerieId');
+        $router->get('{id}/casts', 'TmdbController@getCastsBySerieId');
     });
     $router->group(['prefix' => 'categories'], function () use ($router) {
         $router->post('/', 'CategoriesSeriesController@PostCategoriesSerie');
