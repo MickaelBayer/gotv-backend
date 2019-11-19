@@ -60,7 +60,7 @@ $router->group(['prefix' => 'api'], function () use ($router) {
     });
 
     $router->group(['prefix' => 'roles'], function () use ($router) {
-        $router->get('/', 'RolesController@getAllRoles');
+        $router->get('/', ['middleware' => 'auth:1', 'uses' => 'RolesController@getAllRoles']);
         $router->get('/{id}', 'RolesController@getRoleById');
         $router->post('/', 'RolesController@postRole');
         $router->put('/{id}', 'RolesController@putRoleById');
