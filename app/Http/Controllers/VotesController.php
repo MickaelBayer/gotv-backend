@@ -7,11 +7,6 @@ use Illuminate\Http\Request;
 
 class VotesController extends Controller
 {
-    public function __construct()
-    {
-        //$this->middleware('auth:api');
-    }
-
     public function getAllVotes()
     {
         $vote = Vote::with('serie', 'user')->get();

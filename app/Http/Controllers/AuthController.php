@@ -15,16 +15,6 @@ use App\Utils\JwtUtils;
 class AuthController extends Controller
 {
     /**
-     * Create a new AuthController instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('auth:api', ['except' => ['login', 'register']]);
-    }
-
-    /**
      * Fonction permettant l'authentification de l'utilisateur
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse

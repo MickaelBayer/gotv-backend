@@ -7,11 +7,6 @@ use Illuminate\Http\Request;
 
 class CategoriesController extends Controller
 {
-    public function __construct()
-    {
-        //$this->middleware('auth:api');
-    }
-
     public function getAllCatSeries()
     {
         $catSerie = Categorie::with("cae_series.see_categories")->get();

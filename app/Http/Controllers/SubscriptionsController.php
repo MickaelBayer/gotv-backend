@@ -7,11 +7,6 @@ use Illuminate\Http\Request;
 
 class SubscriptionsController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth:api', ['except' => ['getAllSubscriptions', 'getSubscriptionById']]);
-    }
-
     public function getAllSubscriptions()
     {
         $subscription = Subscription::get();

@@ -2,17 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Categories;
 use App\Models\CategoriesSeries;
 use Illuminate\Http\Request;
 
 class CategoriesSeriesController extends Controller
 {
-/*    public function __construct()
-    {
-        $this->middleware('auth:api');
-    }*/
-
     public function PostCategoriesSerie(Request $request)
     {
         // validation des champs
