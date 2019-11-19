@@ -7,11 +7,6 @@ use Illuminate\Http\Request;
 
 class EventsController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth:api');
-    }
-
     public function getAllEvents()
     {
         $event = Event::with('evt_plm_id')->get();
