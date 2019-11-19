@@ -7,11 +7,6 @@ use Illuminate\Http\Request;
 
 class SeriesController extends Controller
 {
-    /*    public function __construct()
-    {
-        $this->middleware('auth:api');
-    }*/
-
     public function getAllSeries()
     {
         $serie = Serie::with("see_categories")->get();

@@ -8,11 +8,6 @@ use Illuminate\Http\Request;
 
 class UsersController extends Controller
 {
-    public function __construct()
-    {
-        // $this->middleware('auth:api');
-    }
-
     public function getAllUsers()
     {
         $user = User::with('role', 'subscription', 'votes')->get();

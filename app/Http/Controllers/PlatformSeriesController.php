@@ -7,11 +7,6 @@ use Illuminate\Http\Request;
 
 class PlatformSeriesController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth:api');
-    }
-
     public function getAllPlatformSeries()
     {
         $platformSerie = PlatformSerie::get();

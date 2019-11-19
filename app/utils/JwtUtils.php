@@ -7,6 +7,8 @@ use Jose\Component\Signature\Algorithm\HS256;
 use Jose\Component\Signature\JWSBuilder;
 use Jose\Component\Signature\Serializer\CompactSerializer;
 use Jose\Component\KeyManagement\JWKFactory;
+use Jose\Component\Signature\Serializer\JWSSerializerManager;
+use Jose\Component\Signature\JWSVerifier;
 
 class JwtUtils
 {
@@ -26,10 +28,10 @@ class JwtUtils
 
         $serializer = new CompactSerializer();
 
-        return $serializer->serialize(self::GetJWS($payload), 0);
+        return $serializer->serialize(self::CreateJWS($payload), 0);
     }
 
-    private static function GetJWS($payload)
+    private static function CreateJWS($payload)
     {
         $algorithmManager = new AlgorithmManager([
             new HS256(),
@@ -44,7 +46,7 @@ class JwtUtils
             ->build();
     }
 
-    private static function GetJWK()
+    public static function GetJWK()
     {
         return JWKFactory::createFromSecret(
             getenv('JWT_SECRET'),       // The shared secret
@@ -53,5 +55,30 @@ class JwtUtils
                 'use' => 'sig'
             ]
         );
+    }
+
+    public static function GetJWS($token)
+    {
+        // The serializer manager. We only use the JWS Compact Serialization Mode.
+        $serializerManager = new JWSSerializerManager([
+            new CompactSerializer(),
+        ]);
+
+        return $serializerManager->unserialize($token);
+    }
+
+    public static function VerifyToken($token)
+    {
+        // The algorithm manager with the HS256 algorithm.
+        $algorithmManager = new AlgorithmManager([
+            new HS256(),
+        ]);
+
+        // We instantiate our JWS Verifier.
+        $jwsVerifier = new JWSVerifier(
+            $algorithmManager
+        );
+
+        return $jwsVerifier->verifyWithKey(self::GetJWS($token), self::GetJWK(), 0);
     }
 }
