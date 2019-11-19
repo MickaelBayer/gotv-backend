@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use App\Models\Role;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
-use ReallySimpleJWT\Token;
-use Tymon\JWTAuth\Exceptions\JWTException;
+use App\Utils\JwtUtils;
 
 /**
  * Class AuthController
@@ -31,41 +31,28 @@ class AuthController extends Controller
      */
     public function login(Request $request)
     {
+        $user = User::where('usr_pseudo', strtolower($request->input('usr_pseudo')))->first();
 
-        $credentials = $request->only('usr_pseudo', 'password');
-
-        $isActiv = User::where('usr_pseudo', strtolower($request->input('usr_pseudo')))->first();
-
-        if ($isActiv->getIsActiv() == 0) {
+        if ($user->getIsActiv() == 0) {
             return response()->json([
                 "error" => "2000"
             ]);
         }
 
-        $token = $this->guard()->attempt($credentials);
+        if (password_verify($request->input('password'), $user->password)) {
+            $expire = time() + 3600;
 
-        if ($token) {
-            return $this->respondWithToken($token);
+            $token = JwtUtils::CreateToken($user, $expire);
+
+            if ($token) {
+                return $this->respondWithToken($token, $expire);
+            }
         }
 
         return response()->json([
             "status" => 401,
             'error' => 'invalid_credentials'
         ], 401);
-    }
-
-    /**
-     * Fonction permettant à l'utilisateur de se déconnecter
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function logout()
-    {
-        try {
-            auth()->logout();
-            return response()->json(['message' => 'Successfully logout']);
-        } catch (JWTException $e) {
-            return response()->json(['message' => $e]);
-        }
     }
 
     /**
@@ -77,14 +64,12 @@ class AuthController extends Controller
     {
         // vérification de la présence de l'email dans la base de donnée
         $isEmail = User::where('usr_email', strtolower($request->input('usr_email')))->get();
-        echo (sizeof($isEmail) == 0);
         if (sizeof($isEmail) != 0) {
             return response()->json(['error' => '3001'], 500);
         }
 
         // vérification de la présence du pseudo dans la base de donnée
         $isPseudo = User::where('usr_pseudo', strtolower($request->input('usr_pseudo')))->get();
-        echo (sizeof($isPseudo) == 0);
         if (sizeof($isPseudo) != 0) {
             return response()->json(['error' => '3002'], 500);
         }
@@ -109,26 +94,15 @@ class AuthController extends Controller
             'usr_firstname' => $request->input('usr_firstname'),
             'usr_lastname' => $request->input('usr_lastname')
         ];
-
+        $role = Role::find(3);
         $user = User::create($data);
-        $userId = $user->id;
-        $secret = getenv('JWT_SECRET');
-        $expiration = time() + 3600;
-        $issuer = 'localhost';
+        $user->role()->associate($role);
+        $user->save();
+        $expire = time() + 3600;
 
-        $token = Token::create($userId, $secret, $expiration, $issuer);
+        $token = JwtUtils::CreateToken($user, $expire);
 
-        return $this->respondWithToken($token);
-    }
-
-    /**
-     * Refresh a token.
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function refresh()
-    {
-        return $this->respondWithToken(auth()->refresh());
+        return $this->respondWithToken($token, $expire);
     }
 
     /**
