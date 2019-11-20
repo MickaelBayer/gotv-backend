@@ -23,4 +23,9 @@ class Serie extends Model
     {
         return $this->belongsToMany('App\Models\Categorie', "categories_series", "cae_see_serie", "cae_see_category");
     }
+
+    public function see_votes()
+    {
+        return $this->hasMany('App\Models\Vote', "voe_see_id");
+    }
 }

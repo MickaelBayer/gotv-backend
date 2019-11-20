@@ -9,13 +9,13 @@ class SeriesController extends Controller
 {
     public function getAllSeries()
     {
-        $serie = Serie::with("see_categories")->get();
+        $serie = Serie::with("see_categories", "see_votes.voe_user.usr_role")->get();
         return $serie;
     }
 
     public function getSerieById(int $id)
     {
-        $serie = Serie::with("see_categories")->find($id);
+        $serie = Serie::with("see_categories", "see_votes.voe_user.usr_role")->find($id);
         return $serie;
     }
 
