@@ -35,7 +35,7 @@ class AuthController extends Controller
             $token = JwtUtils::CreateToken($user, $expire);
 
             if ($token) {
-                return $this->respondWithToken($token, $expire);
+                return $this->respondWithToken($token, $expire, $user);
             }
         }
 
@@ -92,7 +92,7 @@ class AuthController extends Controller
 
         $token = JwtUtils::CreateToken($user, $expire);
 
-        return $this->respondWithToken($token, $expire);
+        return $this->respondWithToken($token, $expire, $user);
     }
 
     /**

@@ -20,12 +20,13 @@ class Controller extends BaseController
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    protected function respondWithToken($token, $expire)
+    protected function respondWithToken($token, $expire, $user)
     {
         return response()->json([
             'access_token' => $token,
             'token_type' => 'bearer',
-            'expires_in' => $expire
+            'expires_in' => $expire,
+            'user' => $user
         ]);
     }
 
