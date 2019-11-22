@@ -35,7 +35,7 @@ class AuthController extends Controller
             $token = JwtUtils::CreateToken($user, $expire);
 
             if ($token) {
-                return $this->respondWithToken($token, $expire, $user);
+                return $this->respondWithToken($token, $expire);
             }
         }
 
@@ -86,13 +86,13 @@ class AuthController extends Controller
         ];
         $role = Role::find(3);
         $user = User::create($data);
-        $user->role()->associate($role);
+        $user->usr_role()->associate($role);
         $user->save();
         $expire = time() + 3600;
 
         $token = JwtUtils::CreateToken($user, $expire);
 
-        return $this->respondWithToken($token, $expire, $user);
+        return $this->respondWithToken($token, $expire);
     }
 
     /**
