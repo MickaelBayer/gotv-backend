@@ -10,13 +10,13 @@ class UsersController extends Controller
 {
     public function getAllUsers()
     {
-        $user = User::with('role', 'subscription', 'votes')->get();
+        $user = User::with('usr_role', 'usr_votes')->get();
         return $user;
     }
 
     public function getUserById(int $id)
     {
-        $user = User::with('role', 'subscription', 'votes')->find($id);
+        $user = User::with('usr_role', 'usr_votes')->find($id);
         return $user;
     }
 

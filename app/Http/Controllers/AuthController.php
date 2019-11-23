@@ -86,7 +86,7 @@ class AuthController extends Controller
         ];
         $role = Role::find(3);
         $user = User::create($data);
-        $user->role()->associate($role);
+        $user->usr_role()->associate($role);
         $user->save();
         $expire = time() + 3600;
 

@@ -23,6 +23,9 @@ class JwtUtils
             'aud' => 'GoTvSeries',
             'id' => $user->usr_id,
             'email' => $user->usr_email,
+            'pseudo' => $user->usr_pseudo,
+            'firstname' => $user->usr_firstname,
+            'lastname' => $user->usr_lastname,
             'rank' => $user->usr_roe_id
         ]);
 
