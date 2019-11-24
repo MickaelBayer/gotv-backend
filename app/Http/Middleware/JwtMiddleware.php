@@ -17,7 +17,7 @@ class JwtMiddleware
      */
     public function handle(Request $request, Closure $next, $rank = 0)
     {
-        $token = $request->header('authorization');
+        $token = $request->header('Authorization');
         if ($token) {
             if (JwtUtils::VerifyToken($token)) {
                 $request->request->add(['decoded' => json_decode(JwtUtils::GetJWS($token)->getPayload(), true)]);
