@@ -9,13 +9,13 @@ class VotesController extends Controller
 {
     public function getAllVotes()
     {
-        $vote = Vote::with('serie', 'user')->get();
+        $vote = Vote::with('voe_serie', 'voe_user')->get();
         return $vote;
     }
 
     public function getVoteById(int $id)
     {
-        $vote = Vote::find($id);
+        $vote = Vote::with('voe_serie', 'voe_user')->find($id);
         return $vote;
     }
 
@@ -24,7 +24,8 @@ class VotesController extends Controller
         try {
             $this->validate($request, [
                 'voe_see_id' => 'required|integer',
-                'voe_usr_id' => 'integer',
+                'voe_usr_id' => 'required|integer',
+                'voe_comment' => 'required',
                 'voe_mark' => 'required'
 
             ]);

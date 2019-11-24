@@ -9,13 +9,13 @@ class CategoriesController extends Controller
 {
     public function getAllCatSeries()
     {
-        $catSerie = Categorie::with("cae_series.see_categories")->get();
+        $catSerie = Categorie::with("cae_series.see_categories", "cae_series.see_votes.voe_user")->get();
         return $catSerie;
     }
 
     public function getCatSerieById(int $id)
     {
-        $catSerie = Categorie::find($id);
+        $catSerie = Categorie::with("cae_series.see_categories", "cae_series.see_votes.voe_user")->find($id);
         return $catSerie;
     }
 
