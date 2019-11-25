@@ -22,8 +22,8 @@ class TmdbController extends Controller
 
         for ($currentPage = 1; $currentPage <= $totalPage; $currentPage++) {
             $contents = $this->getResJsonFormat($urlWithEndpoint . '?api_key=' . getenv('TMDB_TOKEN') . '&language=' . $this->lang . '&page=' . $currentPage);
-
             foreach ($contents['results'] as $result) {
+                sleep(0.5);
                 $country = null;
                 $first_air_date = null;
 
