@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:8889
--- Generation Time: Nov 05, 2019 at 09:56 AM
+-- Generation Time: Nov 25, 2019 at 06:58 PM
 -- Server version: 5.7.23
 -- PHP Version: 7.2.10
 
@@ -13,8 +13,6 @@ SET time_zone = "+00:00";
 --
 -- Database: `goTvSeries`
 --
-CREATE DATABASE IF NOT EXISTS `goTvSeries` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
-USE `goTvSeries`;
 
 -- --------------------------------------------------------
 
@@ -86,7 +84,8 @@ CREATE TABLE `platforms` (
 CREATE TABLE `roles` (
   `roe_id` int(11) NOT NULL,
   `roe_name` text NOT NULL,
-  `roe_description` text
+  `roe_description` text,
+  `roe_coef` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -151,8 +150,8 @@ CREATE TABLE `votes` (
   `voe_see_id` int(11) DEFAULT NULL,
   `voe_comment` text,
   `voe_mark` int(11) DEFAULT NULL,
-  `updated_at` date DEFAULT NULL,
-  `created_at` date DEFAULT NULL
+  `updated_at` datetime DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
