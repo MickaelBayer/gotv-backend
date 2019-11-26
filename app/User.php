@@ -47,9 +47,4 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     {
         return $this->hasMany('App\Models\Vote', 'voe_usr_id');
     }
-
-    public function getIsActiv()
-    {
-        return $this->usr_activ;
-    }
 }
