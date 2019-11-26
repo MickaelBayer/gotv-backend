@@ -23,19 +23,21 @@ class AuthController extends Controller
     {
         $user = User::where('usr_pseudo', strtolower($request->input('usr_pseudo')))->first();
 
-        if ($user->getIsActiv() == 0) {
-            return response()->json([
-                "error" => "2000"
-            ]);
-        }
+        if ($user != null) {
+            if ($user->usr_activ == 0) {
+                return response()->json([
+                    "error" => "2000"
+                ], 403);
+            }
 
-        if (password_verify($request->input('password'), $user->password)) {
-            $expire = time() + 3600;
+            if (password_verify($request->input('password'), $user->password)) {
+                $expire = time() + 3600;
 
-            $token = JwtUtils::CreateToken($user, $expire);
+                $token = JwtUtils::CreateToken($user, $expire);
 
-            if ($token) {
-                return $this->respondWithToken($token, $expire);
+                if ($token) {
+                    return $this->respondWithToken($token, $expire);
+                }
             }
         }
 
@@ -55,13 +57,13 @@ class AuthController extends Controller
         // vérification de la présence de l'email dans la base de donnée
         $isEmail = User::where('usr_email', strtolower($request->input('usr_email')))->get();
         if (sizeof($isEmail) != 0) {
-            return response()->json(['error' => '3001'], 500);
+            return response()->json(['error' => '3001'], 409);
         }
 
         // vérification de la présence du pseudo dans la base de donnée
         $isPseudo = User::where('usr_pseudo', strtolower($request->input('usr_pseudo')))->get();
         if (sizeof($isPseudo) != 0) {
-            return response()->json(['error' => '3002'], 500);
+            return response()->json(['error' => '3002'], 409);
         }
 
         // validation des champs
@@ -74,7 +76,7 @@ class AuthController extends Controller
                 'usr_lastname' => 'required'
             ]);
         } catch (ValidationException $e) {
-            return response()->json(['error' => '3000'], 500);
+            return response()->json(['error' => '3000'], 422);
         }
 
         $data = [

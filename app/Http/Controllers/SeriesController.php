@@ -13,6 +13,12 @@ class SeriesController extends Controller
         return $serie;
     }
 
+    public function getReleaseOfTheWeekSeries()
+    {
+        $serie = Serie::with("see_categories", "see_votes.voe_user.usr_role")->orderBy("see_first_air_date")->get();
+        return $serie;
+    }
+
     public function getSerieById(int $id)
     {
         $serie = Serie::with("see_categories", "see_votes.voe_user.usr_role")->find($id);

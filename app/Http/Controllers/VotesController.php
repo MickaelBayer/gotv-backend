@@ -30,7 +30,7 @@ class VotesController extends Controller
 
             ]);
         } catch (ValidationException $e) {
-            return response()->json(['error' => '3000', 'message' => $e], 500);
+            return response()->json(['error' => '3000', 'message' => $e], 422);
         }
 
         $vote = new Vote();
@@ -39,6 +39,7 @@ class VotesController extends Controller
         $vote->voe_comment = $request->voe_comment;
         $vote->voe_mark = $request->voe_mark;
         $vote->save();
+
         return $vote;
     }
 
