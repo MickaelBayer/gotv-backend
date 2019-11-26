@@ -28,31 +28,36 @@ class Serie extends Model
 
     public function getSeeAverageMarkAttribute()
     {
-        $voteValues = array();
-        $roleCoefValues = array();
+        $dico = array();
+
         foreach ($this->see_votes as $vote) {
             $operandResult = $vote->voe_mark * $vote->voe_user->usr_role->roe_coef;
-            array_push($voteValues, $operandResult);
-            array_push($roleCoefValues, $vote->voe_user->usr_role->roe_coef);
+            $dico[$operandResult] = $vote->voe_user->usr_role->roe_coef;
         }
 
-        if (array_sum($roleCoefValues) != 0) {
-            $result = array_sum($voteValues) / array_sum($roleCoefValues);
-            $sup = round($result);
-            $inf = floor($result);
-            $try = (float) $inf . '.5';
-
-            if ($result > $try) {
-                return $sup;
-            }
-
-            return $inf;
+        if (array_sum(array_values($dico)) != 0) {
+            $result = array_sum(array_keys($dico)) / array_sum(array_values($dico));
+            return self::getRoundedValue($result);
         }
+
         return 0;
     }
 
     public function see_votes()
     {
         return $this->hasMany('App\Models\Vote', "voe_see_id");
+    }
+
+    private static function getRoundedValue($value)
+    {
+        $sup = round($value);
+        $inf = floor($value);
+        $try = (float) $inf . '.5';
+
+        if ($value > $try) {
+            return $sup;
+        }
+
+        return $inf;
     }
 }
