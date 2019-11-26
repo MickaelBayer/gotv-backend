@@ -42,7 +42,7 @@ class TmdbController extends Controller
                     'see_backdrop_path' => $urlBackdropImage . $result['backdrop_path'],
                 ];
                 $serie = Serie::create($data);
-                $serieId = $serie->id;
+                $serieId = $serie->see_id;
 
                 foreach ($result['genre_ids'] as $cat) {
                     $dataCatSeries = [
