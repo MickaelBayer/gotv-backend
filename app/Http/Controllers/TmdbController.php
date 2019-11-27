@@ -14,7 +14,7 @@ class TmdbController extends Controller
 
     public function fillSeries()
     {
-        $urlPosterImage = 'https://image.tmdb.org/t/p/w500/';
+        $urlPosterImage = 'https://image.tmdb.org/t/p/w200/';
         $urlBackdropImage = 'https://image.tmdb.org/t/p/original/';
         $urlWithEndpoint = getenv('TMDB_ADDRESS') . '/tv/top_rated';
         $contents = $this->getResJsonFormat($urlWithEndpoint . '?api_key=' . getenv('TMDB_TOKEN') . '&language=' . $this->lang . '&page=1');
