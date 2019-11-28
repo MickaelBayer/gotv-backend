@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:8889
--- Generation Time: Nov 25, 2019 at 06:58 PM
+-- Generation Time: Nov 28, 2019 at 09:02 PM
 -- Server version: 5.7.23
 -- PHP Version: 7.2.10
 
@@ -135,7 +135,13 @@ CREATE TABLE `users` (
   `usr_lastname` varchar(100) NOT NULL,
   `usr_roe_id` int(11) DEFAULT NULL,
   `usr_sun_id` int(11) DEFAULT NULL,
-  `usr_activ` tinyint(1) NOT NULL DEFAULT '1'
+  `usr_activ` tinyint(1) NOT NULL DEFAULT '1',
+  `usr_birthday` datetime DEFAULT NULL,
+  `usr_phone` text,
+  `usr_postal_code` text,
+  `usr_address` text,
+  `usr_city` text,
+  `usr_country` text
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
