@@ -24,7 +24,13 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
         'password',
         'usr_firstname',
         'usr_lastname',
-        'usr_activ'
+        'usr_activ',
+        'usr_birthday',
+        'usr_phone',
+        'usr_postal_code',
+        'usr_address',
+        'usr_city',
+        'usr_country'
     ];
 
     protected $hidden =  [
