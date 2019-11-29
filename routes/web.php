@@ -54,6 +54,7 @@ $router->group(['prefix' => 'api'], function () use ($router) {
     $router->group(['prefix' => 'votes'], function () use ($router) {
         $router->get('/', 'VotesController@getAllVotes');
         $router->get('/{id}', 'VotesController@getVoteById');
+        $router->get('/{id}/serie', 'VotesController@getVoteBySerie');
         $router->post('/', ['middleware' => 'auth', 'uses' => 'VotesController@postVote']);
         $router->put('/{id}', ['middleware' => 'auth', 'uses' => 'VotesController@putVoteById']);
         $router->delete('/{id}', ['middleware' => 'auth', 'uses' => 'VotesController@deleteVoteById']);

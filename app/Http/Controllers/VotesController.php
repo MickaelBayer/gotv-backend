@@ -19,6 +19,12 @@ class VotesController extends Controller
         return $vote;
     }
 
+    public function getVoteBySerie(int $id)
+    {
+        $vote = Vote::where('voe_see_id', $id)->with('voe_serie', 'voe_user')->get();
+        return $vote;
+    }
+
     public function postVote(Request $request)
     {
         $userAlreadyVote = Vote::where('voe_usr_id', $request->input('voe_usr_id'))->where('voe_see_id', $request->input('voe_see_id'))->first();
@@ -33,7 +39,6 @@ class VotesController extends Controller
                 'voe_usr_id' => 'required|integer',
                 'voe_comment' => 'required',
                 'voe_mark' => 'required'
-
             ]);
         } catch (ValidationException $e) {
             return response()->json(['error' => '3000', 'message' => $e], 422);
