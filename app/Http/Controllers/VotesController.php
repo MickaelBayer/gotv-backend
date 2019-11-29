@@ -21,6 +21,12 @@ class VotesController extends Controller
 
     public function postVote(Request $request)
     {
+        $userAlreadyVote = Vote::where('voe_usr_id', $request->input('voe_usr_id'))->where('voe_see_id', $request->input('voe_see_id'))->first();
+
+        if ($userAlreadyVote) {
+            return response()->json(['status' => '409', 'error' => 'The user has already voted'], 409);
+        }
+
         try {
             $this->validate($request, [
                 'voe_see_id' => 'required|integer',
