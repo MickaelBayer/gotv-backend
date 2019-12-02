@@ -19,6 +19,12 @@ class SeriesController extends Controller
         return $serie;
     }
 
+    public function getBestSeries()
+    {
+        $serie = Serie::with("see_categories", "see_votes.voe_user.usr_role")->get()->sortByDesc("see_average_mark")->take(10);
+        return $serie;
+    }
+
     public function getSerieById(int $id)
     {
         $serie = Serie::with("see_categories", "see_votes.voe_user.usr_role")->find($id);
