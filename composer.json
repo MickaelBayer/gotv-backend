@@ -9,6 +9,7 @@
         "ext-json": "*",
         "doctrine/dbal": "^2.9",
         "laravel/lumen-framework": "5.8.*",
+        "palanik/lumen-cors": "dev-master",
         "php-tmdb/api": "~2.1",
         "web-token/jwt-framework": "^2.1",
         "web-token/jwt-key-mgmt": "^2.1"
