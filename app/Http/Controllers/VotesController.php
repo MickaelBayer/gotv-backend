@@ -21,7 +21,7 @@ class VotesController extends Controller
 
     public function getVoteBySerie(int $id)
     {
-        $vote = Vote::where('voe_see_id', $id)->with('voe_serie', 'voe_user')->get();
+        $vote = Vote::where('voe_see_id', $id)->with('voe_serie', 'voe_user.usr_role')->get();
         return $vote;
     }
 
