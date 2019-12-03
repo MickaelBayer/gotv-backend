@@ -31,6 +31,7 @@ $router->group(['prefix' => 'api'], function () use ($router) {
         $router->get('/', 'SeriesController@getAllSeries');
         $router->get('/top-series', 'SeriesController@getBestSeries');
         $router->get('/{id}', 'SeriesController@getSerieById');
+        $router->get('/search', 'SeriesController@getSerieByName');
         $router->post('/', 'SeriesController@postSerie');
         $router->put('/{id}', 'SeriesController@putSerieById');
         $router->delete('/{id}', 'SeriesController@deleteSerieById');
