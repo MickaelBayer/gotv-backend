@@ -25,6 +25,13 @@ class SeriesController extends Controller
         return $serie;
     }
 
+    public function getSerieByName(Request $request)
+    {
+        $see_name = $request->input('name');
+        $serie = Serie::where("see_name", "LIKE", "%{$see_name}%")->with("see_categories", "see_votes.voe_user.usr_role")->get();
+        return $serie;
+    }
+
     public function getSerieById(int $id)
     {
         $serie = Serie::with("see_categories", "see_votes.voe_user.usr_role")->find($id);
@@ -94,8 +101,6 @@ class SeriesController extends Controller
         $serie->save();
         return $serie;
     }
-
-
 
     public function deleteSerieById(int $id)
     {
