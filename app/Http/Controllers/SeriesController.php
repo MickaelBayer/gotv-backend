@@ -27,7 +27,9 @@ class SeriesController extends Controller
 
     public function getSerieByName(Request $request)
     {
-        $see_name = $request->input('name');
+        if($request->input('name')){
+            $see_name = $request->input('name');
+        }
         $serie = Serie::where("see_name", "LIKE", "%{$see_name}%")->with("see_categories", "see_votes.voe_user.usr_role")->get();
         return $serie;
     }
