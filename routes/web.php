@@ -28,10 +28,10 @@ $router->group(['prefix' => 'api'], function () use ($router) {
     });
 
     $router->group(['prefix' => 'series'], function () use ($router) {
+        $router->get('/search', 'SeriesController@getSerieByName');
         $router->get('/', 'SeriesController@getAllSeries');
         $router->get('/top-series', 'SeriesController@getBestSeries');
         $router->get('/{id}', 'SeriesController@getSerieById');
-        $router->get('/search', 'SeriesController@getSerieByName');
         $router->post('/', 'SeriesController@postSerie');
         $router->put('/{id}', 'SeriesController@putSerieById');
         $router->delete('/{id}', 'SeriesController@deleteSerieById');
@@ -82,6 +82,7 @@ $router->group(['prefix' => 'api'], function () use ($router) {
         $router->get('{id}/videos', 'TmdbController@getVideosBySerieId');
         $router->get('{id}/casts', 'TmdbController@getCastsBySerieId');
     });
+
     $router->group(['prefix' => 'categories'], function () use ($router) {
         $router->post('/', 'CategoriesSeriesController@PostCategoriesSerie');
     });
